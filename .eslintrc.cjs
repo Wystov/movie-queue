@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true, peerDependencies: true }],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -25,10 +25,16 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {
-      typescript: {},
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+        extensions: ['.ts', '.vue'],
+      },
     },
   },
 };
