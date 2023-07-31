@@ -18,10 +18,7 @@
         <movie-card
           v-for="movie in searchStore.results"
           :key="movie.id"
-          :title="movie.title"
-          :description="movie.overview"
-          :img="movie.poster_path"
-          :release-date="movie.release_date"
+          :movie="movie"
         />
       </div>
     </div>

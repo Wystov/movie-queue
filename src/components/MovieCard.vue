@@ -4,7 +4,7 @@
     max-width="300"
   >
     <v-img
-      :src="basicImgPath + img"
+      :src="basicImgPath + movie.poster_path"
       width="300px"
       height="400px"
       cover>
@@ -27,18 +27,45 @@
       </template>
     </v-img>
     <v-card-title>
-      {{ title }}
+      {{ movie.title }}
     </v-card-title>
     <v-card-subtitle>
-      {{ releaseDate }}
+      {{ movie.release_date }}
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
-        color="orange-lighten-2"
+        v-if="!queueStore.isInList(movie.id)"
+        @click="queueStore.addMovie(movie)"
+        color="success"
         variant="text"
       >
-        to watch
+        + queue
       </v-btn>
+      <template v-else>
+        <v-btn
+          @click="queueStore.removeMovie(movie.id)"
+          color="red"
+          variant="text"
+        >
+          - queue
+        </v-btn>
+        <v-btn
+          v-if="movie.isWatched"
+          @click="queueStore.toggleWatched(movie.id)"
+          color="red"
+          variant="text"
+        >
+          watched
+        </v-btn>
+        <v-btn
+          v-else
+          @click="queueStore.toggleWatched(movie.id)"
+          color="success"
+          variant="text"
+        >
+          not watched
+        </v-btn>
+      </template>
       <v-spacer />
       <v-btn
         :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
@@ -48,21 +75,28 @@
     <v-expand-transition>
       <div v-show="show">
         <v-divider />
-        <v-card-text>{{ description }}</v-card-text>
+        <v-card-text>{{ movie.overview }}</v-card-text>
       </div>
     </v-expand-transition>
   </v-card>
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
+import { mapStores } from 'pinia';
+import { useToWatchStore } from '../stores/queue';
 import thumbnail from '../assets/img/thumbnail.jpg';
+import type { Movie } from '@/types';
 
 export default {
   props: {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    img: { type: String, required: true },
-    releaseDate: { type: String, required: true },
+    movie: {
+      type: Object as PropType<Movie>,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapStores(useToWatchStore),
   },
   data: () => ({
     basicImgPath: 'https://image.tmdb.org/t/p/original/',

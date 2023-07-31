@@ -4,4 +4,5 @@ export interface Movie {
   poster_path: string;
   overview: string;
   release_date: string;
+  isWatched?: boolean;
 }
