@@ -4,12 +4,12 @@
     max-width="300"
   >
     <v-img
+      v-if="movie.poster_path"
       :src="basicImgPath + movie.poster_path"
       width="300px"
       height="400px"
       cover>
-      <template
-        v-slot:placeholder>
+      <template v-slot:placeholder>
         <div class="d-flex align-center justify-center fill-height">
           <v-progress-circular
             color="grey-lighten-4"
@@ -17,20 +17,19 @@
           />
         </div>
       </template>
-      <template v-slot:error>
-        <v-img
-          width="300px"
-          height="400px"
-          cover
-          :src="thumbnail"
-        />
-      </template>
     </v-img>
+    <v-img
+      v-else
+      width="300px"
+      height="400px"
+      cover
+      :src="thumbnail"
+    />
     <v-card-title>
       {{ movie.title }}
     </v-card-title>
     <v-card-subtitle>
-      {{ movie.release_date }}
+      {{ movie.release_date.length ? movie.release_date : 'no date info' }}
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
@@ -50,7 +49,7 @@
           - queue
         </v-btn>
         <v-btn
-          v-if="movie.isWatched"
+          v-if="isWatched(movie)"
           @click="queueStore.toggleWatched(movie.id)"
           color="red"
           variant="text"
@@ -68,6 +67,7 @@
       </template>
       <v-spacer />
       <v-btn
+        v-if="movie.overview"
         :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
         @click="show = !show"
       />
@@ -84,9 +84,9 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { mapStores } from 'pinia';
+import type { Movie } from '@/types';
 import { useQueueStore } from '../stores/queue';
 import thumbnail from '../assets/img/thumbnail.jpg';
-import type { Movie } from '@/types';
 
 export default {
   props: {
@@ -103,5 +103,11 @@ export default {
     show: false,
     thumbnail,
   }),
+  methods: {
+    isWatched(movie: Movie): boolean {
+      return movie.isWatched
+      ?? Boolean(this.queueStore.watched.find((item) => item.id === movie.id));
+    },
+  },
 };
 </script>
