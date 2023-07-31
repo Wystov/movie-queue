@@ -1,29 +1,26 @@
 <template>
-  <h1 class="text-center">watched</h1>
-  <div v-if="!queueStore.watched.length">No saved movies</div>
-  <div v-else>
-    <h1 class="text-center">{{ queueStore.watched.length }} movies watched from list</h1>
-    <div class="d-flex flex-wrap justify-center">
-      <movie-card
-        v-for="movie in queueStore.watched"
-        :key="movie.id"
-        :movie="movie"
-      />
-    </div>
-  </div>
+  <movie-list :movies="watched" :text-content="textContent">
+    <template v-slot:subheader>watched movies</template>
+  </movie-list>
 </template>
 
 <script lang="ts">
-import { mapStores } from 'pinia';
+import { mapState } from 'pinia';
 import { useQueueStore } from '../stores/queue';
-import MovieCard from '../components/MovieCard.vue';
+import MovieList from '../components/MovieList.vue';
 
 export default {
   components: {
-    MovieCard,
+    MovieList,
   },
+  data: () => ({
+    textContent: {
+      title: 'Watched',
+      error: 'No movies watched from queue',
+    },
+  }),
   computed: {
-    ...mapStores(useQueueStore),
+    ...mapState(useQueueStore, ['watched']),
   },
 };
 </script>

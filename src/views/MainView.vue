@@ -1,41 +1,37 @@
 <template>
-  <div class="d-flex flex-column justify-center align-center">
-    <h1>main</h1>
-    <v-text-field
-      v-model="searchInput"
-      ref="input"
-      @keyup.enter="searchMovies"
-      class="w-50"
-      clearable
-      label="Let's find a movie"
-      prepend-icon="mdi-magnify"
-      variant="underlined"
-    />
-    <div v-if="!searchStore.total">No results</div>
-    <div v-else>
-      <h1 class="text-center">{{ searchStore.total }} results found for "{{ searchStore.requestString }}"</h1>
-      <div class="d-flex flex-wrap justify-center">
-        <movie-card
-          v-for="movie in searchStore.results"
-          :key="movie.id"
-          :movie="movie"
-        />
-      </div>
-    </div>
-  </div>
+  <movie-list :movies="searchStore.results" :textContent="textContent" :total="searchStore.total">
+    <template v-slot:search>
+      <v-text-field
+        v-model="searchInput"
+        ref="input"
+        @keyup.enter="searchMovies"
+        class="w-50"
+        clearable
+        label="Let's find a movie"
+        prepend-icon="mdi-magnify"
+        variant="underlined"
+      />
+    </template>
+    <template v-slot:subheader>results found for "{{ searchStore.requestString }}"</template>
+  </movie-list>
 </template>
 
 <script lang="ts">
 import { mapStores } from 'pinia';
 import { useSearchStore } from '../stores/search';
-import MovieCard from '../components/MovieCard.vue';
+import MovieList from '../components/MovieList.vue';
 
 export default {
   components: {
-    MovieCard,
+    MovieList,
   },
   data: () => ({
     searchInput: '',
+    isSearched: false,
+    textContent: {
+      title: 'Main',
+      error: 'No movies found',
+    },
   }),
   computed: {
     ...mapStores(useSearchStore),
