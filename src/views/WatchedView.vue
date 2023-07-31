@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { mapStores } from 'pinia';
-import { useToWatchStore } from '../stores/queue';
+import { useQueueStore } from '../stores/queue';
 import MovieCard from '../components/MovieCard.vue';
 
 export default {
@@ -23,7 +23,7 @@ export default {
     MovieCard,
   },
   computed: {
-    ...mapStores(useToWatchStore),
+    ...mapStores(useQueueStore),
   },
 };
 </script>

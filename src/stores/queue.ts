@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import type { Movie } from '../types';
 
-export const useToWatchStore = defineStore('queue', {
+const queueFromLs = localStorage.getItem('movie-queue: queue');
+
+export const useQueueStore = defineStore('queue', {
   state: () => ({
-    movies: [] as Movie[],
+    movies: (queueFromLs ? JSON.parse(queueFromLs) : []) as Movie[],
   }),
   getters: {
     isInList: (state) => (id: number) => state.movies.find((movie) => movie.id === id),

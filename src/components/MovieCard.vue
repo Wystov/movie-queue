@@ -84,7 +84,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { mapStores } from 'pinia';
-import { useToWatchStore } from '../stores/queue';
+import { useQueueStore } from '../stores/queue';
 import thumbnail from '../assets/img/thumbnail.jpg';
 import type { Movie } from '@/types';
 
@@ -96,7 +96,7 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useToWatchStore),
+    ...mapStores(useQueueStore),
   },
   data: () => ({
     basicImgPath: 'https://image.tmdb.org/t/p/original/',
