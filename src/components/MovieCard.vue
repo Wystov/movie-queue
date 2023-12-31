@@ -1,13 +1,12 @@
 <template>
   <v-card
     class="ma-4"
-    max-width="300"
+    width="100%"
+
   >
     <v-img
-      v-if="movie.poster_path"
-      :src="basicImgPath + movie.poster_path"
-      width="300px"
-      height="400px"
+      :src="path"
+      aspect-ratio="3/4"
       cover>
       <template v-slot:placeholder>
         <div class="d-flex align-center justify-center fill-height">
@@ -17,14 +16,15 @@
           />
         </div>
       </template>
+      <template v-slot:error>
+        <v-img
+          height="76%"
+          aspect-ratio="3/4"
+          cover
+          :src="thumbnail"
+        />
+      </template>
     </v-img>
-    <v-img
-      v-else
-      width="300px"
-      height="400px"
-      cover
-      :src="thumbnail"
-    />
     <v-card-title>
       {{ movie.title }}
     </v-card-title>
@@ -97,6 +97,10 @@ export default {
   },
   computed: {
     ...mapStores(useQueueStore),
+    path() {
+      return this.movie.poster_path !== null
+        ? this.basicImgPath + this.movie.poster_path : thumbnail;
+    },
   },
   data: () => ({
     basicImgPath: 'https://image.tmdb.org/t/p/original/',

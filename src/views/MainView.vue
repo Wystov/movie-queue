@@ -5,7 +5,7 @@
         v-model="searchInput"
         ref="input"
         @keyup.enter="searchMovies"
-        class="w-50"
+        class="w-50 ma-auto"
         clearable
         label="Let's find a movie"
         prepend-icon="mdi-magnify"
