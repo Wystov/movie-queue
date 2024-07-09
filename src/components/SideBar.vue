@@ -1,5 +1,9 @@
 <template>
-  <v-navigation-drawer expand-on-hover rail>
+  <v-navigation-drawer
+    :expand-on-hover="$vuetify.display.mdAndUp"
+    :mobile="!$vuetify.display.mdAndUp"
+    rail
+    permanent>
     <v-list>
       <v-list-item
         prepend-icon="mdi-account"
