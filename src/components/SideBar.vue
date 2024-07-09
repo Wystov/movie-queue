@@ -6,7 +6,7 @@
     permanent>
     <v-list>
       <v-list-item title="Movie Queue" prepend-icon="mdi-movie">
-        <template v-slot:title>
+        <template #title>
           <h1 class="text-h6 font-weight-bold">Movie Queue</h1>
         </template>
       </v-list-item>

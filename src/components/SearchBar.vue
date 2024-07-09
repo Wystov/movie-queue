@@ -1,14 +1,14 @@
 <template>
   <v-text-field
     v-model="searchInput"
-    @keyup.enter="searchMovies"
-    @click:prepend-inner="searchMovies"
     :loading="search.isLoading"
     class="w-50 ma-auto"
     clearable
     label="Let's find a movie"
     prepend-inner-icon="mdi-magnify"
     variant="underlined"
+    @keyup.enter="searchMovies"
+    @click:prepend-inner="searchMovies"
   />
 </template>
 

@@ -2,13 +2,12 @@
   <v-card
     class="ma-4"
     width="100%"
-
   >
     <v-img
       :src="path"
       aspect-ratio="3/4"
       cover>
-      <template v-slot:placeholder>
+      <template #placeholder>
         <div class="d-flex align-center justify-center fill-height">
           <v-progress-circular
             color="grey-lighten-4"
@@ -16,7 +15,7 @@
           />
         </div>
       </template>
-      <template v-slot:error>
+      <template #error>
         <v-img
           height="76%"
           aspect-ratio="3/4"
@@ -34,33 +33,33 @@
     <v-card-actions>
       <v-btn
         v-if="!queueStore.isInList(movie.id)"
-        @click="queueStore.addMovie(movie)"
         color="success"
         variant="text"
+        @click="queueStore.addMovie(movie)"
       >
         + queue
       </v-btn>
       <template v-else>
         <v-btn
-          @click="queueStore.removeMovie(movie.id)"
           color="red"
           variant="text"
+          @click="queueStore.removeMovie(movie.id)"
         >
           - queue
         </v-btn>
         <v-btn
           v-if="isWatched(movie)"
-          @click="queueStore.toggleWatched(movie.id)"
           color="red"
           variant="text"
+          @click="queueStore.toggleWatched(movie.id)"
         >
           watched
         </v-btn>
         <v-btn
           v-else
-          @click="queueStore.toggleWatched(movie.id)"
           color="success"
           variant="text"
+          @click="queueStore.toggleWatched(movie.id)"
         >
           not watched
         </v-btn>
@@ -95,6 +94,11 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    basicImgPath: 'https://image.tmdb.org/t/p/original/',
+    show: false,
+    thumbnail,
+  }),
   computed: {
     ...mapStores(useQueueStore),
     path() {
@@ -102,11 +106,6 @@ export default {
         ? this.basicImgPath + this.movie.poster_path : thumbnail;
     },
   },
-  data: () => ({
-    basicImgPath: 'https://image.tmdb.org/t/p/original/',
-    show: false,
-    thumbnail,
-  }),
   methods: {
     isWatched(movie: Movie): boolean {
       return movie.isWatched

@@ -1,6 +1,6 @@
 <template>
-  <movie-list :movies="toWatch" :textContent="textContent">
-    <template v-slot:subheader>saved movies</template>
+  <movie-list :movies="toWatch" :text-content="textContent">
+    <template #subheader>saved movies</template>
   </movie-list>
 </template>
 
