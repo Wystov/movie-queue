@@ -7,6 +7,7 @@ export const useSearchStore = defineStore('search', {
     results: [] as Movie[],
     total: 0,
     requestString: '',
+    isInitiated: false,
   }),
   actions: {
     async searchMovies(value: string) {

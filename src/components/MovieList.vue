@@ -1,6 +1,5 @@
 <template>
   <h1 class="text-center">{{ textContent.title }}</h1>
-  <slot name="search" />
   <div v-if="!movies.length" class="text-center">{{ textContent.error }}</div>
   <div v-else>
     <h2 class="text-center">{{ total }} <slot name="subheader" /></h2>
