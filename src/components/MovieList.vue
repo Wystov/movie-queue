@@ -1,10 +1,10 @@
 <template>
-  <div v-if="!search.results.length" class="text-center">No movies found</div>
+  <h1 v-if="header" class="text-center text-uppercase">{{ header }}</h1>
+  <div v-if="!movies.length" class="text-center">{{ errorText }}</div>
   <div v-else>
-    <h2 class="text-center">{{ search.total }} results found for "{{ search.requestString }}"</h2>
     <v-row class="mr-5">
       <v-col
-        v-for="movie in search.results"
+        v-for="movie in movies"
         :key="movie.id"
         cols="12"
         sm="6"
@@ -20,9 +20,13 @@
 </template>
 
 <script setup lang="ts">
+import type { Movie } from '@/types';
 import MovieCard from './MovieCard.vue';
-import { useSearchStore } from '../stores/search';
 
-const search = useSearchStore();
+defineProps<{
+  movies: Movie[],
+  header?: string,
+  errorText?: string,
+}>();
 
 </script>

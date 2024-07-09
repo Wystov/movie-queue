@@ -1,7 +1,5 @@
 <template>
-  <movie-list :movies="watched" :text-content="textContent">
-    <template #subheader>watched movies</template>
-  </movie-list>
+  <movie-list :movies="watched" :error-text="textContent.error" header="watched movies" />
 </template>
 
 <script lang="ts">

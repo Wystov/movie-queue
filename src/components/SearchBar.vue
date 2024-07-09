@@ -10,6 +10,7 @@
     @keyup.enter="searchMovies"
     @click:prepend-inner="searchMovies"
   />
+  <h2 v-if="search.isInitiated" class="text-center">{{ search.total }} results found for "{{ search.requestString }}"</h2>
 </template>
 
 <script setup lang="ts">
