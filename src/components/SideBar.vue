@@ -5,10 +5,7 @@
     rail
     permanent>
     <v-list>
-      <v-list-item
-        prepend-icon="mdi-account"
-        title="User"
-        subtitle="profile" />
+      <v-list-item prepend-icon="mdi-movie" title="Movie Queue" />
     </v-list>
     <v-divider />
     <v-list density="compact" nav>
