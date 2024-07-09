@@ -32,6 +32,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const { mode } = storeToRefs(useSearchStore());
 const { getMovies } = useSearchStore();
+
 const links = [
   { to: 'main', icon: 'mdi-magnify', text: 'Search' },
   { to: 'to-watch', icon: 'mdi-star', text: 'Starred' },
