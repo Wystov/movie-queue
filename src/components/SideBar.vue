@@ -5,7 +5,7 @@
     rail
     permanent>
     <v-list>
-      <v-list-item title="Movie Queue" prepend-icon="mdi-movie">
+      <v-list-item title="Movie Queue" prepend-icon="mdi-movie" @click="handleTrending">
         <template #title>
           <h1 class="text-h6 font-weight-bold">Movie Queue</h1>
         </template>
@@ -25,9 +25,18 @@
 </template>
 
 <script setup lang="ts">
+import { useSearchStore } from '@/stores/search';
+import { storeToRefs } from 'pinia';
+
+const { mode } = storeToRefs(useSearchStore());
+const { searchMovies } = useSearchStore();
 const links = [
   { to: 'main', icon: 'mdi-magnify', text: 'Search' },
   { to: 'to-watch', icon: 'mdi-star', text: 'Starred' },
   { to: 'watched', icon: 'mdi-history', text: 'Watched' },
 ];
+
+const handleTrending = () => {
+  if (mode.value !== 'popular') searchMovies();
+};
 </script>

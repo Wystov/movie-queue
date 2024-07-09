@@ -16,6 +16,10 @@ export const useSearchStore = defineStore('search', () => {
       requestString.value = value;
       isInitiated.value = true;
       mode.value = 'search';
+    } else {
+      mode.value = 'popular';
+      requestString.value = '';
+      isInitiated.value = false;
     }
 
     isLoading.value = true;
