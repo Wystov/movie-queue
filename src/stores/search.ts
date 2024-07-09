@@ -8,11 +8,14 @@ export const useSearchStore = defineStore('search', {
     total: 0,
     requestString: '',
     isInitiated: false,
+    isLoading: false,
   }),
   actions: {
     async searchMovies(value: string) {
       this.requestString = value;
+      this.isLoading = true;
       const response = await axiosMovieApi.get(`search/movie?query=${value}`);
+      this.isLoading = false;
       this.results = response.data.results;
       this.total = response.data.total_results;
     },
