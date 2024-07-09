@@ -1,6 +1,6 @@
 <template>
   <movie-list
-    :movies="queue.toWatch"
+    :movies="toWatch"
     :error-text="textContent.error"
     :header="textContent.title" />
 </template>
@@ -14,5 +14,5 @@ const textContent = {
   error: 'No movies saved',
 };
 
-const queue = useQueueStore();
+const { toWatch } = useQueueStore();
 </script>

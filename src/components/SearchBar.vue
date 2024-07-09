@@ -2,7 +2,7 @@
   <v-text-field
     v-model="searchInput"
     :loading="search.isLoading"
-    class="w-50 ma-auto"
+    class="w-50 ma-auto mt-5"
     clearable
     label="Let's find a movie"
     prepend-inner-icon="mdi-magnify"
