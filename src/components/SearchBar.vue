@@ -2,14 +2,15 @@
   <v-text-field
     v-model="searchInput"
     @keyup.enter="searchMovies"
+    @click:prepend-inner="searchMovies"
     class="w-50 ma-auto"
     clearable
     label="Let's find a movie"
-    prepend-icon="mdi-magnify"
+    prepend-inner-icon="mdi-magnify"
     variant="underlined"
   />
+  <v-btn icon="$vuetify" />
 </template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useSearchStore } from '../stores/search';
