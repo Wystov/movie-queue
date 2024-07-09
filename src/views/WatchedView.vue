@@ -1,24 +1,18 @@
 <template>
-  <movie-list :movies="watched" :error-text="textContent.error" header="watched movies" />
+  <movie-list
+    :movies="queue.watched"
+    :error-text="textContent.error"
+    :header="textContent.title" />
 </template>
 
-<script lang="ts">
-import { mapState } from 'pinia';
+<script setup lang="ts">
 import { useQueueStore } from '../stores/queue';
 import MovieList from '../components/MovieList.vue';
 
-export default {
-  components: {
-    MovieList,
-  },
-  data: () => ({
-    textContent: {
-      title: 'Watched',
-      error: 'No movies watched from queue',
-    },
-  }),
-  computed: {
-    ...mapState(useQueueStore, ['watched']),
-  },
+const textContent = {
+  title: 'Watched',
+  error: 'No movies watched from queue',
 };
+
+const queue = useQueueStore();
 </script>
