@@ -10,7 +10,7 @@
     @keyup.enter="handleSubmit"
     @click:prepend-inner="handleSubmit"
   />
-  <h2 v-if="isInitiated" class="text-center">
+  <h2 v-if="isInitiated && !isLoading" class="text-center">
     {{ total }} results found for "{{ requestString }}"
   </h2>
 </template>

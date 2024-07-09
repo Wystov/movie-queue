@@ -10,8 +10,12 @@
 <script setup lang="ts">
 import AppSideBar from './components/SideBar.vue';
 import { useQueueStore } from './stores/queue';
+import { useSearchStore } from './stores/search';
 
 const queue = useQueueStore();
+const { searchMovies } = useSearchStore();
+
+searchMovies();
 
 queue.$subscribe((_, state) => {
   localStorage.setItem('movie-queue: queue', JSON.stringify(state.movies));

@@ -7,3 +7,5 @@ export interface Movie {
   vote_average: number;
   isWatched?: boolean;
 }
+
+export type MainPageMode = 'search' | 'popular';
