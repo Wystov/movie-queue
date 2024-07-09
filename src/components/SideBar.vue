@@ -5,9 +5,9 @@
     rail
     permanent>
     <v-list>
-      <v-list-item title="Movie Queue">
-        <template v-slot:prepend>
-          <v-icon class="mr-3">mdi-movie</v-icon>
+      <v-list-item title="Movie Queue" prepend-icon="mdi-movie">
+        <template v-slot:title>
+          <h1 class="text-h6 font-weight-bold">Movie Queue</h1>
         </template>
       </v-list-item>
     </v-list>
@@ -17,11 +17,9 @@
         v-for="link in links"
         :key="link.to"
         :to="{ name: link.to }"
-        :title="link.text">
-        <template v-slot:prepend>
-          <v-icon class="mr-3">{{ link.icon }}</v-icon>
-        </template>
-      </v-list-item>
+        :title="link.text"
+        :prepend-icon="link.icon"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
