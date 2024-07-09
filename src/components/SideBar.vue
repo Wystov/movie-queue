@@ -8,9 +8,20 @@
     </v-list>
     <v-divider />
     <v-list density="compact" nav>
-      <v-list-item :to="{ name: 'main' }" prepend-icon="mdi-magnify" title="Search" value="search" />
-      <v-list-item :to="{ name: 'to-watch' }" prepend-icon="mdi-star" title="Starred" value="to-watch" />
-      <v-list-item :to="{ name: 'watched' }" prepend-icon="mdi-history" title="Watched" value="watched" />
+      <v-list-item
+        v-for="link in links"
+        :key="link.to"
+        :to="{ name: link.to }"
+        :prepend-icon="link.icon"
+        :title="link.text" />
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<script setup lang="ts">
+const links = [
+  { to: 'main', icon: 'mdi-magnify', text: 'Search' },
+  { to: 'to-watch', icon: 'mdi-star', text: 'Starred' },
+  { to: 'watched', icon: 'mdi-history', text: 'Watched' },
+];
+</script>
