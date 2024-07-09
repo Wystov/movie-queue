@@ -1,33 +1,39 @@
 <template>
   <v-text-field
     v-model="searchInput"
-    :loading="search.isLoading"
+    :loading="isLoading"
     class="w-50 ma-auto mt-5"
     clearable
     label="Let's find a movie"
     prepend-inner-icon="mdi-magnify"
     variant="underlined"
-    @keyup.enter="searchMovies"
-    @click:prepend-inner="searchMovies"
+    @keyup.enter="handleSubmit"
+    @click:prepend-inner="handleSubmit"
   />
-  <h2 v-if="search.isInitiated" class="text-center">{{ search.total }} results found for "{{ search.requestString }}"</h2>
+  <h2 v-if="isInitiated" class="text-center">
+    {{ total }} results found for "{{ requestString }}"
+  </h2>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useSearchStore } from '../stores/search';
 
-const search = useSearchStore();
+const { searchMovies } = useSearchStore();
+const {
+  isLoading, isInitiated, total, requestString,
+} = storeToRefs(useSearchStore());
 
 const searchInput = ref('');
 
-const searchMovies = (e: Event) => {
+const handleSubmit = (e: Event) => {
   if (searchInput.value.length < 1) return;
 
   const inputEl = e.target;
   if (inputEl instanceof HTMLInputElement) inputEl.blur();
 
-  search.searchMovies(searchInput.value);
+  searchMovies(searchInput.value);
   searchInput.value = '';
 };
 

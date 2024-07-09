@@ -6,6 +6,7 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { useQueueStore } from '../stores/queue';
 import MovieList from '../components/MovieList.vue';
 
@@ -14,5 +15,5 @@ const textContent = {
   error: 'No movies saved',
 };
 
-const { toWatch } = useQueueStore();
+const { toWatch } = storeToRefs(useQueueStore());
 </script>
