@@ -11,6 +11,7 @@
     variant="underlined"
   />
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useSearchStore } from '../stores/search';
