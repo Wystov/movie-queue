@@ -11,7 +11,7 @@ export const useSearchStore = defineStore('search', () => {
   const isLoading = ref(false);
   const mode = ref<MainPageMode>('popular');
 
-  const searchMovies = async (value?: string) => {
+  const getMovies = async (value?: string) => {
     if (value) {
       requestString.value = value;
       isInitiated.value = true;
@@ -37,6 +37,6 @@ export const useSearchStore = defineStore('search', () => {
     requestString,
     isInitiated,
     isLoading,
-    searchMovies,
+    getMovies,
   };
 });

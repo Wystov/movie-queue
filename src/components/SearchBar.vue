@@ -20,7 +20,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useSearchStore } from '../stores/search';
 
-const { searchMovies } = useSearchStore();
+const { getMovies } = useSearchStore();
 const {
   isLoading, isInitiated, total, requestString,
 } = storeToRefs(useSearchStore());
@@ -33,7 +33,7 @@ const handleSubmit = (e: Event) => {
   const inputEl = e.target;
   if (inputEl instanceof HTMLInputElement) inputEl.blur();
 
-  searchMovies(searchInput.value);
+  getMovies(searchInput.value);
   searchInput.value = '';
 };
 

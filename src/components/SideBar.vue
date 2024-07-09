@@ -27,9 +27,11 @@
 <script setup lang="ts">
 import { useSearchStore } from '@/stores/search';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const { mode } = storeToRefs(useSearchStore());
-const { searchMovies } = useSearchStore();
+const { getMovies } = useSearchStore();
 const links = [
   { to: 'main', icon: 'mdi-magnify', text: 'Search' },
   { to: 'to-watch', icon: 'mdi-star', text: 'Starred' },
@@ -37,6 +39,9 @@ const links = [
 ];
 
 const handleTrending = () => {
-  if (mode.value !== 'popular') searchMovies();
+  if (mode.value !== 'popular') {
+    getMovies();
+    router.push({ name: 'main' });
+  }
 };
 </script>
