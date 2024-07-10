@@ -22,13 +22,13 @@ import { useSearchStore } from '../stores/search';
 
 const { getMovies } = useSearchStore();
 const {
-  isLoading, isInitiated, total, requestString,
+  isLoading, isInitiated, total, requestString, mode,
 } = storeToRefs(useSearchStore());
 
 const searchInput = ref('');
 
 const handleSubmit = (e: Event) => {
-  if (searchInput.value.length < 1) return;
+  if (!searchInput.value && mode.value === 'popular') return;
 
   const inputEl = e.target;
   if (inputEl instanceof HTMLInputElement) inputEl.blur();
