@@ -1,11 +1,14 @@
 <template>
   <v-card
     class="ma-4"
-    width="100%">
+    width="100%"
+    height="100%"
+  >
     <v-img
       :src="path"
-      aspect-ratio="3/4"
-      cover>
+      height="70%"
+      cover
+    >
       <template #placeholder>
         <div class="d-flex align-center justify-center fill-height">
           <v-progress-circular
@@ -16,14 +19,14 @@
       </template>
       <template #error>
         <v-img
-          height="76%"
+          :src="thumbnail"
+          height="80%"
           aspect-ratio="3/4"
           cover
-          :src="thumbnail"
         />
       </template>
     </v-img>
-    <v-card-title>
+    <v-card-title style="white-space: normal; height: 4em;">
       {{ movie.title }}
     </v-card-title>
     <v-card-subtitle>
