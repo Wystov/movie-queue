@@ -3,6 +3,13 @@ import { ref } from 'vue';
 import axiosMovieApi from '../api/movie-db';
 import type { MainPageMode, Movie } from '../types';
 
+type MoviesRespType = {
+  results: Movie[];
+  total_results: number;
+};
+
+const cache = new Map<string, MoviesRespType>();
+
 export const useSearchStore = defineStore('search', () => {
   const results = ref([] as Movie[]);
   const total = ref(0);
@@ -11,23 +18,36 @@ export const useSearchStore = defineStore('search', () => {
   const isLoading = ref(false);
   const mode = ref<MainPageMode>('popular');
 
+  const setData = (data: MoviesRespType, query: string) => {
+    results.value = data.results;
+    total.value = data.total_results;
+    cache.set(query, data);
+  };
+
   const getMovies = async (value?: string) => {
-    if (value) {
-      requestString.value = value;
-      isInitiated.value = true;
-      mode.value = 'search';
-    } else {
-      mode.value = 'popular';
-      requestString.value = '';
-      isInitiated.value = false;
+    requestString.value = value ?? '';
+    isInitiated.value = !!value;
+    mode.value = value ? 'search' : 'popular';
+    isLoading.value = true;
+
+    const query = value ? `search/movie?query=${value}` : 'movie/popular';
+
+    const cachedResults = cache.get(query);
+    if (cachedResults) {
+      setData(cachedResults, query);
+      isLoading.value = false;
+      return;
     }
 
-    isLoading.value = true;
-    const query = value ? `search/movie?query=${value}` : 'movie/popular';
-    const response = await axiosMovieApi.get(query);
-    isLoading.value = false;
-    results.value = response.data.results;
-    total.value = response.data.total_results;
+    try {
+      const response = await axiosMovieApi.get<MoviesRespType>(query);
+      setData(response.data, query);
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('Failed to fetch data');
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   return {

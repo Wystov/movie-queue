@@ -29,6 +29,7 @@ module.exports = {
       },
     ],
     'import/prefer-default-export': 'off',
+    'no-unused-expressions': 'off',
   },
   settings: {
     'import/resolver': {
