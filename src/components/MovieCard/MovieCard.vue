@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="ma-4"
+    class="ma-4 d-flex flex-column"
     width="100%"
     height="100%"
   >
