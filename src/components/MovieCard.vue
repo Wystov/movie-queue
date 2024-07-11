@@ -30,7 +30,7 @@
       {{ movie.title }}
     </v-card-title>
     <v-card-subtitle>
-      {{ movie.release_date.length ? movie.release_date : 'no date info' }}
+      {{ date }}
     </v-card-subtitle>
     <movie-card-actions :movie="movie" />
   </v-card>
@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { Movie } from '@/types';
+import { getFormattedDate } from '@/utils/getFormattedDate';
 import thumbnail from '../assets/img/thumbnail.jpg';
 import MovieCardActions from './MovieCardActions.vue';
 
@@ -51,5 +52,7 @@ const baseImgPath = 'https://image.tmdb.org/t/p/original/';
 const path = computed(
   () => (props.movie.poster_path ? baseImgPath + props.movie.poster_path : thumbnail),
 );
+
+const date = computed(() => getFormattedDate(props.movie.release_date));
 
 </script>
