@@ -28,7 +28,7 @@ import { computed } from 'vue';
 import thumbnail from '@/assets/img/thumbnail.jpg';
 
 const props = defineProps<{
-  path: string,
+  path: string | null;
 }>();
 
 const baseImgPath = 'https://image.tmdb.org/t/p/original/';
