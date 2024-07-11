@@ -1,6 +1,7 @@
 <template>
   <v-text-field
-    v-model="searchInput"
+    ref="inputEl"
+    v-model="inputValue"
     :loading="isLoading"
     class="w-50 ma-auto mt-5"
     clearable
@@ -25,16 +26,15 @@ const {
   isLoading, isInitiated, total, requestString, mode,
 } = storeToRefs(useSearchStore());
 
-const searchInput = ref('');
+const inputEl = ref<HTMLInputElement | null>(null);
+const inputValue = ref('');
 
-const handleSubmit = (e: Event) => {
-  if (!searchInput.value && mode.value === 'popular') return;
+const handleSubmit = () => {
+  inputEl.value?.blur();
+  if (!inputValue.value && mode.value === 'popular') return;
 
-  const inputEl = e.target;
-  if (inputEl instanceof HTMLInputElement) inputEl.blur();
-
-  getMovies(searchInput.value);
-  searchInput.value = '';
+  getMovies(inputValue.value);
+  inputValue.value = '';
 };
 
 </script>
