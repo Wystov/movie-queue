@@ -63,19 +63,7 @@
           not watched
         </v-btn>
       </template>
-      <v-spacer />
-      <v-btn
-        v-if="movie.overview"
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
-      />
     </v-card-actions>
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider />
-        <v-card-text>{{ movie.overview }}</v-card-text>
-      </div>
-    </v-expand-transition>
   </v-card>
 </template>
 
@@ -93,7 +81,6 @@ const props = defineProps<{
 }>();
 
 const baseImgPath = 'https://image.tmdb.org/t/p/original/';
-const show = ref(false);
 
 const path = computed(
   () => (props.movie.poster_path ? baseImgPath + props.movie.poster_path : thumbnail),
