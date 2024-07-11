@@ -29,52 +29,15 @@
     <v-card-subtitle>
       {{ movie.release_date.length ? movie.release_date : 'no date info' }}
     </v-card-subtitle>
-    <v-card-actions>
-      <v-btn
-        v-if="!queue.isInList(movie.id)"
-        color="success"
-        variant="text"
-        @click="addMovie(movie)"
-      >
-        + queue
-      </v-btn>
-      <template v-else>
-        <v-btn
-          color="red"
-          variant="text"
-          @click="removeMovie(movie.id)"
-        >
-          - queue
-        </v-btn>
-        <v-btn
-          v-if="isWatched(movie)"
-          color="red"
-          variant="text"
-          @click="toggleWatched(movie.id)"
-        >
-          watched
-        </v-btn>
-        <v-btn
-          v-else
-          color="success"
-          variant="text"
-          @click="toggleWatched(movie.id)"
-        >
-          not watched
-        </v-btn>
-      </template>
-    </v-card-actions>
+    <movie-card-actions :movie="movie" />
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import type { Movie } from '@/types';
-import { useQueueStore } from '../stores/queue';
 import thumbnail from '../assets/img/thumbnail.jpg';
-
-const { addMovie, removeMovie, toggleWatched } = useQueueStore();
-const queue = useQueueStore();
+import MovieCardActions from './MovieCardActions.vue';
 
 const props = defineProps<{
   movie: Movie;
@@ -85,8 +48,5 @@ const baseImgPath = 'https://image.tmdb.org/t/p/original/';
 const path = computed(
   () => (props.movie.poster_path ? baseImgPath + props.movie.poster_path : thumbnail),
 );
-
-const isWatched = (movie: Movie): boolean => movie.isWatched
-      ?? !!(queue.watched.find((item) => item.id === movie.id));
 
 </script>
