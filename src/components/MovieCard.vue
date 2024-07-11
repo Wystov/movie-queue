@@ -1,8 +1,7 @@
 <template>
   <v-card
     class="ma-4"
-    width="100%"
-  >
+    width="100%">
     <v-img
       :src="path"
       aspect-ratio="3/4"
@@ -32,10 +31,10 @@
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
-        v-if="!queueStore.isInList(movie.id)"
+        v-if="!queue.isInList(movie.id)"
         color="success"
         variant="text"
-        @click="queueStore.addMovie(movie)"
+        @click="addMovie(movie)"
       >
         + queue
       </v-btn>
@@ -43,7 +42,7 @@
         <v-btn
           color="red"
           variant="text"
-          @click="queueStore.removeMovie(movie.id)"
+          @click="removeMovie(movie.id)"
         >
           - queue
         </v-btn>
@@ -51,7 +50,7 @@
           v-if="isWatched(movie)"
           color="red"
           variant="text"
-          @click="queueStore.toggleWatched(movie.id)"
+          @click="toggleWatched(movie.id)"
         >
           watched
         </v-btn>
@@ -59,7 +58,7 @@
           v-else
           color="success"
           variant="text"
-          @click="queueStore.toggleWatched(movie.id)"
+          @click="toggleWatched(movie.id)"
         >
           not watched
         </v-btn>
@@ -80,37 +79,27 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue';
-import { mapStores } from 'pinia';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import type { Movie } from '@/types';
 import { useQueueStore } from '../stores/queue';
 import thumbnail from '../assets/img/thumbnail.jpg';
 
-export default {
-  props: {
-    movie: {
-      type: Object as PropType<Movie>,
-      required: true,
-    },
-  },
-  data: () => ({
-    basicImgPath: 'https://image.tmdb.org/t/p/original/',
-    show: false,
-    thumbnail,
-  }),
-  computed: {
-    ...mapStores(useQueueStore),
-    path() {
-      return this.movie.poster_path !== null
-        ? this.basicImgPath + this.movie.poster_path : thumbnail;
-    },
-  },
-  methods: {
-    isWatched(movie: Movie): boolean {
-      return movie.isWatched
-      ?? Boolean(this.queueStore.watched.find((item) => item.id === movie.id));
-    },
-  },
-};
+const { addMovie, removeMovie, toggleWatched } = useQueueStore();
+const queue = useQueueStore();
+
+const props = defineProps<{
+  movie: Movie;
+}>();
+
+const baseImgPath = 'https://image.tmdb.org/t/p/original/';
+const show = ref(false);
+
+const path = computed(
+  () => (props.movie.poster_path ? baseImgPath + props.movie.poster_path : thumbnail),
+);
+
+const isWatched = (movie: Movie): boolean => movie.isWatched
+      ?? !!(queue.watched.find((item) => item.id === movie.id));
+
 </script>
