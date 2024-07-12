@@ -5,9 +5,10 @@
       color="surface-variant"
       class="dark-bg"
       height="100%"
-      :title='title'
-      :subtitle="subtitle"
-      :image='bgImg' />
+      :image='bgImg'>
+      <v-card-title class="text-h2 text-center">{{ title }}</v-card-title>
+      <v-card-subtitle class="text-h6 text-center">{{ subtitle }}</v-card-subtitle>
+    </v-card>
   </template>
 </template>
 
@@ -29,6 +30,6 @@ const bgImg = baseImgPath + (movie?.data.backdrop_path ?? '');
 
 <style scoped>
 .dark-bg ::v-deep img {
-    filter: brightness(40%);
+    filter: brightness(25%);
 }
 </style>

@@ -29,7 +29,7 @@ import thumbnail from '@/assets/img/thumbnail.jpg';
 import { baseImgPath } from '@/const';
 
 const props = defineProps<{
-  path: string | null;
+  path?: string | null;
 }>();
 
 const imgPath = computed(
