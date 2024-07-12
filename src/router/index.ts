@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainView from '../views/MainView.vue';
 import ToWatchView from '../views/ToWatchView.vue';
 import WatchedView from '../views/WatchedView.vue';
+import MovieView from '../views/MovieView.vue';
 
 const routes = [
   {
@@ -26,6 +27,14 @@ const routes = [
     component: WatchedView,
     meta: {
       title: 'Watched',
+    },
+  },
+  {
+    name: 'movie',
+    path: '/movie/:id',
+    component: MovieView,
+    meta: {
+      title: 'Movie',
     },
   },
   // {

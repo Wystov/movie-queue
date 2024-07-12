@@ -26,12 +26,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import thumbnail from '@/assets/img/thumbnail.jpg';
+import { baseImgPath } from '@/const';
 
 const props = defineProps<{
   path: string | null;
 }>();
-
-const baseImgPath = 'https://image.tmdb.org/t/p/original/';
 
 const imgPath = computed(
   () => (props.path ? baseImgPath + props.path : thumbnail),

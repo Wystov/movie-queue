@@ -13,9 +13,9 @@ import { useQueueStore } from './stores/queue';
 import { useSearchStore } from './stores/search';
 
 const queue = useQueueStore();
-const { getMovies } = useSearchStore();
+const { getMovieList } = useSearchStore();
 
-getMovies();
+getMovieList();
 
 queue.$subscribe((_, state) => {
   localStorage.setItem('movie-queue: queue', JSON.stringify(state.movies));

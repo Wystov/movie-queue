@@ -3,6 +3,7 @@
     class="ma-4 d-flex flex-column"
     width="100%"
     height="100%"
+    @click="handleClick"
   >
     <movie-card-image :path="movie.poster_path" />
     <v-card-title style="white-space: normal; height: 4em;">
@@ -26,6 +27,7 @@
 import { computed } from 'vue';
 import type { Movie } from '@/types';
 import { getFormattedDate } from '@/utils/getFormattedDate';
+import { useRouter } from 'vue-router';
 import MovieCardActions from './MovieCardActions.vue';
 import MovieCardImage from './MovieCardImage.vue';
 
@@ -33,8 +35,12 @@ const props = defineProps<{
   movie: Movie;
 }>();
 
+const router = useRouter();
+
 const rating = computed(() => props.movie.vote_average.toFixed(1).replace('.0', ''));
 
 const date = computed(() => getFormattedDate(props.movie.release_date));
+
+const handleClick = () => router.push({ name: 'movie', params: { id: props.movie.id } });
 
 </script>

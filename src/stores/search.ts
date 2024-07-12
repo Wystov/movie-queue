@@ -24,7 +24,7 @@ export const useSearchStore = defineStore('search', () => {
     cache.set(query, data);
   };
 
-  const getMovies = async (value?: string) => {
+  const getMovieList = async (value?: string) => {
     requestString.value = value ?? '';
     isInitiated.value = !!value;
     mode.value = value ? 'search' : 'popular';
@@ -50,6 +50,20 @@ export const useSearchStore = defineStore('search', () => {
     }
   };
 
+  const getMovie = async (id: string) => {
+    isLoading.value = true;
+    const query = `movie/${id}`;
+
+    try {
+      const response = await axiosMovieApi.get<Movie>(query);
+      return response;
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('Failed to fetch data');
+    } finally {
+      isLoading.value = false;
+    }
+  };
   return {
     mode,
     results,
@@ -57,6 +71,7 @@ export const useSearchStore = defineStore('search', () => {
     requestString,
     isInitiated,
     isLoading,
-    getMovies,
+    getMovieList,
+    getMovie,
   };
 });

@@ -31,7 +31,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const { mode } = storeToRefs(useSearchStore());
-const { getMovies } = useSearchStore();
+const { getMovieList } = useSearchStore();
 
 const links = [
   { to: 'main', icon: 'mdi-magnify', text: 'Search' },
@@ -41,7 +41,7 @@ const links = [
 
 const handleTrending = () => {
   if (mode.value !== 'popular') {
-    getMovies();
+    getMovieList();
     router.push({ name: 'main' });
   }
 };
