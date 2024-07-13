@@ -8,6 +8,8 @@ export interface Movie {
   isWatched?: boolean;
   tagline?: string;
   backdrop_path?: string;
+  runtime?: number;
+  genres?: { id: number; name: string }[];
 }
 
 export type MainPageMode = 'search' | 'popular';
