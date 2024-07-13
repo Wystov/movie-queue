@@ -15,14 +15,8 @@
         {{ movie.title }}
       </v-card-title>
       <v-card-subtitle class="d-flex justify-space-between">
-        <div class="d-flex align-center">
-          <v-icon icon="mdi-star" class="mr-1" />
-          {{ rating }}
-        </div>
-        <div class="d-flex align-center">
-          <v-icon icon="mdi-calendar-month" class="mr-1" />
-          {{ date }}
-        </div>
+        <MovieInfoLine icon="mdi-star" :info="rating" />
+        <MovieInfoLine icon="mdi-calendar-month" :info="date" />
       </v-card-subtitle>
       <movie-card-actions :movie="movie" />
     </v-card>
@@ -34,6 +28,7 @@ import { computed } from 'vue';
 import type { Movie } from '@/types';
 import { getFormattedDate } from '@/utils/getFormattedDate';
 import { useRouter } from 'vue-router';
+import MovieInfoLine from '@/components/shared/MovieInfoLine.vue';
 import MovieCardActions from './MovieCardActions.vue';
 import MovieCardImage from './MovieCardImage.vue';
 
