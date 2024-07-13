@@ -9,10 +9,10 @@
       <v-container class="fill-height d-flex" fluid>
         <v-row>
           <v-col cols="auto">
-            <v-img width="400px" height="600px" :src="posterImg" />
+            <v-img class="poster" width="400px" height="600px" :src="posterImg" />
           </v-col>
           <v-col>
-            <v-card-title class="text-h2 pa-0">{{ title }}</v-card-title>
+            <p class="text-h2 mb-2">{{ title }}</p>
             <v-card-subtitle class="text-h6 pa-0">{{ subtitle }}</v-card-subtitle>
             <p class="mt-6 text-body-1">{{ description }}</p>
           </v-col>
@@ -43,5 +43,8 @@ const description = movie?.data.overview;
 <style scoped>
 .dark-bg ::v-deep img {
     filter: brightness(20%);
+}
+.poster ::v-deep img {
+  filter: none;
 }
 </style>
