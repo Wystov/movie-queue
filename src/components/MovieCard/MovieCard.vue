@@ -1,26 +1,32 @@
 <template>
-  <v-card
-    class="ma-4 d-flex flex-column"
-    width="100%"
-    height="100%"
-    @click="handleClick"
-  >
-    <movie-card-image :path="movie.poster_path" />
-    <v-card-title style="white-space: normal; height: 4em;">
-      {{ movie.title }}
-    </v-card-title>
-    <v-card-subtitle class="d-flex justify-space-between">
-      <div class="d-flex align-center">
-        <v-icon icon="mdi-star" class="mr-1" />
-        {{ rating }}
-      </div>
-      <div class="d-flex align-center">
-        <v-icon icon="mdi-calendar-month" class="mr-1" />
-        {{ date }}
-      </div>
-    </v-card-subtitle>
-    <movie-card-actions :movie="movie" />
-  </v-card>
+  <v-hover v-slot="{ isHovering, props: hoverProps }">
+    <v-card
+      class="ma-4 d-flex flex-column"
+      width="100%"
+      height="100%"
+      v-bind="hoverProps"
+    >
+      <movie-card-image
+        :path="movie.poster_path"
+        :is-hovering="isHovering"
+        @click-details="handleClick" />
+
+      <v-card-title style="white-space: normal; height: 4em;">
+        {{ movie.title }}
+      </v-card-title>
+      <v-card-subtitle class="d-flex justify-space-between">
+        <div class="d-flex align-center">
+          <v-icon icon="mdi-star" class="mr-1" />
+          {{ rating }}
+        </div>
+        <div class="d-flex align-center">
+          <v-icon icon="mdi-calendar-month" class="mr-1" />
+          {{ date }}
+        </div>
+      </v-card-subtitle>
+      <movie-card-actions :movie="movie" />
+    </v-card>
+  </v-hover>
 </template>
 
 <script setup lang="ts">
