@@ -1,22 +1,34 @@
 <template>
-  <v-card-actions class="justify-center">
+  <v-card-actions>
     <v-btn
-      icon="mdi-star"
+      icon
       @click="handleFavorite"
     >
-      <template v-if="isFavourite" #default>
-        <v-icon color='warning' />
-      </template>
+      <v-icon :color="isFavourite ? 'warning' : ''">
+        {{ isFavourite ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}
+      </v-icon>
+      <v-tooltip
+        activator="parent"
+        location="bottom"
+      >
+        {{ isFavourite ? 'Remove from watchlist' : 'Add to watchlist' }}
+      </v-tooltip>
     </v-btn>
-    <v-btn
-      v-if="isFavourite"
-      icon="mdi-history"
-      @click="toggleWatched(movie.id)"
-    >
-      <template v-if="isWatched" #default>
-        <v-icon color='success' />
-      </template>
-    </v-btn>
+    <Transition>
+      <v-btn
+        v-if="isFavourite"
+        icon
+        @click="toggleWatched(movie.id)"
+      >
+        <v-icon :color="isWatched ? 'success' : ''">mdi-history</v-icon>
+        <v-tooltip
+          activator="parent"
+          location="bottom"
+        >
+          {{ isWatched ? 'Mark as unwatched' : 'Mark as watched' }}
+        </v-tooltip>
+      </v-btn>
+    </Transition>
   </v-card-actions>
 </template>
 
@@ -40,3 +52,15 @@ const handleFavorite = () => {
 const isWatched = computed(() => props.movie.isWatched
       ?? !!(queue.watched.find((item) => item.id === props.movie.id)));
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
