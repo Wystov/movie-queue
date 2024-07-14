@@ -9,7 +9,7 @@
       <v-container class="fill-height d-flex" fluid>
         <v-row>
           <v-col cols="auto">
-            <movie-card-image class="poster" :path="movie.poster_path" />
+            <movie-poster class="poster" :path="movie.poster_path" />
           </v-col>
           <v-col>
             <p class="text-h2 mb-2">{{ movie.title }}</p>
@@ -22,7 +22,7 @@
                 :info="item.info"
                 :icon="item.icon" />
             </div>
-            <movie-card-actions :movie="movie" />
+            <movie-actions :movie="movie" />
           </v-col>
         </v-row>
       </v-container>
@@ -35,10 +35,10 @@ import { useRoute } from 'vue-router';
 import { useSearchStore } from '@/stores/search';
 import { storeToRefs } from 'pinia';
 import MovieInfoLine from '@/components/shared/MovieInfoLine.vue';
-import MovieCardActions from '@/components/MovieCard/MovieCardActions.vue';
+import MovieActions from '@/components/shared/MovieActions.vue';
 import { computed } from 'vue';
 import { getFormattedTime } from '@/utils/getFormattedTime';
-import MovieCardImage from '@/components/MovieCard/MovieCardImage.vue';
+import MoviePoster from '@/components/shared/MoviePoster.vue';
 
 const route = useRoute();
 const { getMovie } = useSearchStore();

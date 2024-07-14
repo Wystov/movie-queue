@@ -6,7 +6,7 @@
       height="100%"
       v-bind="hoverProps"
     >
-      <movie-card-image
+      <movie-poster
         :path="movie.poster_path"
         :is-hovering="isHovering"
         in-card
@@ -19,7 +19,7 @@
         <MovieInfoLine icon="mdi-star" :info="rating" />
         <MovieInfoLine icon="mdi-calendar-month" :info="date" />
       </v-card-subtitle>
-      <movie-card-actions :movie="movie" />
+      <movie-actions :movie="movie" />
     </v-card>
   </v-hover>
 </template>
@@ -30,8 +30,8 @@ import type { Movie } from '@/types';
 import { getFormattedDate } from '@/utils/getFormattedDate';
 import { useRouter } from 'vue-router';
 import MovieInfoLine from '@/components/shared/MovieInfoLine.vue';
-import MovieCardActions from './MovieCardActions.vue';
-import MovieCardImage from './MovieCardImage.vue';
+import MoviePoster from '@/components/shared/MoviePoster.vue';
+import MovieActions from '@/components/shared/MovieActions.vue';
 
 const props = defineProps<{
   movie: Movie;
