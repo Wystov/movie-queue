@@ -1,38 +1,22 @@
 <template>
-  <v-card-actions>
+  <v-card-actions class="justify-center">
     <v-btn
-      v-if="!queue.isInList(movie.id)"
-      color="success"
-      variant="text"
-      @click="addMovie(movie)"
+      icon="mdi-star"
+      @click="handleFavorite"
     >
-      + queue
+      <template v-if="isFavourite" #default>
+        <v-icon color='warning' />
+      </template>
     </v-btn>
-    <template v-else>
-      <v-btn
-        color="red"
-        variant="text"
-        @click="removeMovie(movie.id)"
-      >
-        - queue
-      </v-btn>
-      <v-btn
-        v-if="isWatched"
-        color="red"
-        variant="text"
-        @click="toggleWatched(movie.id)"
-      >
-        watched
-      </v-btn>
-      <v-btn
-        v-else
-        color="success"
-        variant="text"
-        @click="toggleWatched(movie.id)"
-      >
-        not watched
-      </v-btn>
-    </template>
+    <v-btn
+      v-if="isFavourite"
+      icon="mdi-history"
+      @click="toggleWatched(movie.id)"
+    >
+      <template v-if="isWatched" #default>
+        <v-icon color='success' />
+      </template>
+    </v-btn>
   </v-card-actions>
 </template>
 
@@ -45,6 +29,13 @@ const props = defineProps<{ movie: Movie }>();
 
 const queue = useQueueStore();
 const { addMovie, removeMovie, toggleWatched } = useQueueStore();
+
+const isFavourite = computed(() => queue.isInList(props.movie.id));
+
+const handleFavorite = () => {
+  const { id } = props.movie;
+  isFavourite.value ? removeMovie(id) : addMovie(props.movie);
+};
 
 const isWatched = computed(() => props.movie.isWatched
       ?? !!(queue.watched.find((item) => item.id === props.movie.id)));
