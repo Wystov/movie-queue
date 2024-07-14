@@ -17,7 +17,7 @@
         - queue
       </v-btn>
       <v-btn
-        v-if="isWatched(movie)"
+        v-if="isWatched"
         color="red"
         variant="text"
         @click="toggleWatched(movie.id)"
@@ -39,12 +39,13 @@
 <script setup lang="ts">
 import { useQueueStore } from '@/stores/queue';
 import type { Movie } from '@/types';
+import { computed } from 'vue';
 
-defineProps<{ movie: Movie }>();
+const props = defineProps<{ movie: Movie }>();
 
 const queue = useQueueStore();
 const { addMovie, removeMovie, toggleWatched } = useQueueStore();
 
-const isWatched = (movie: Movie): boolean => movie.isWatched
-      ?? !!(queue.watched.find((item) => item.id === movie.id));
+const isWatched = computed(() => props.movie.isWatched
+      ?? !!(queue.watched.find((item) => item.id === props.movie.id)));
 </script>

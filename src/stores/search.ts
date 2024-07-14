@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { formatMovieInfo } from '@/utils/formatMovieInfo';
 import axiosMovieApi from '../api/movie-db';
 import type { MainPageMode, Movie } from '../types';
 
@@ -17,6 +18,7 @@ export const useSearchStore = defineStore('search', () => {
   const isInitiated = ref(false);
   const isLoading = ref(false);
   const mode = ref<MainPageMode>('popular');
+  const movie = ref({} as Movie);
 
   const setData = (data: MoviesRespType, query: string) => {
     results.value = data.results;
@@ -56,7 +58,7 @@ export const useSearchStore = defineStore('search', () => {
 
     try {
       const response = await axiosMovieApi.get<Movie>(query);
-      return response;
+      movie.value = formatMovieInfo(response.data);
     } catch {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch data');
@@ -64,6 +66,7 @@ export const useSearchStore = defineStore('search', () => {
       isLoading.value = false;
     }
   };
+
   return {
     mode,
     results,
@@ -71,6 +74,7 @@ export const useSearchStore = defineStore('search', () => {
     requestString,
     isInitiated,
     isLoading,
+    movie,
     getMovieList,
     getMovie,
   };

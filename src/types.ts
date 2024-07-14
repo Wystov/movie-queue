@@ -1,3 +1,8 @@
+export interface Genre {
+  id: number;
+  name: string;
+}
+
 export interface Movie {
   id: number;
   title: string;
@@ -9,7 +14,7 @@ export interface Movie {
   tagline?: string;
   backdrop_path?: string;
   runtime?: number;
-  genres?: { id: number; name: string }[];
+  genres?: Genre[];
 }
 
 export type MainPageMode = 'search' | 'popular';
