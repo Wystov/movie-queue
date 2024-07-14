@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { formatMovieInfo } from '@/utils/formatMovieInfo';
 import axiosMovieApi from '../api/movie-db';
 import type { MainPageMode, Movie } from '../types';
@@ -19,12 +19,15 @@ export const useSearchStore = defineStore('search', () => {
   const isLoading = ref(false);
   const mode = ref<MainPageMode>('popular');
   const movie = ref({} as Movie);
+  const currentPage = ref(1);
 
   const setData = (data: MoviesRespType, query: string) => {
     results.value = data.results;
-    total.value = data.total_results;
+    total.value = mode.value === 'popular' ? 2000 : data.total_results;
     cache.set(query, data);
   };
+
+  const pagesTotal = computed(() => Math.ceil(total.value / 20));
 
   const getMovieList = async (value?: string) => {
     requestString.value = value ?? '';
@@ -32,7 +35,9 @@ export const useSearchStore = defineStore('search', () => {
     mode.value = value ? 'search' : 'popular';
     isLoading.value = true;
 
-    const query = value ? `search/movie?query=${value}` : 'movie/popular';
+    const query = value
+      ? `search/movie?query=${value}&page=${currentPage.value}`
+      : `movie/popular?page=${currentPage.value}`;
 
     const cachedResults = cache.get(query);
     if (cachedResults) {
@@ -67,15 +72,22 @@ export const useSearchStore = defineStore('search', () => {
     }
   };
 
+  const changePage = (page: number) => {
+    currentPage.value = page;
+  };
+
   return {
     mode,
     results,
     total,
+    pagesTotal,
     requestString,
     isInitiated,
     isLoading,
     movie,
+    currentPage,
     getMovieList,
     getMovie,
+    changePage,
   };
 });

@@ -21,7 +21,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useSearchStore } from '../stores/search';
 
-const { getMovieList } = useSearchStore();
+const { getMovieList, changePage } = useSearchStore();
 const {
   isLoading, isInitiated, total, requestString, mode,
 } = storeToRefs(useSearchStore());
@@ -33,6 +33,7 @@ const handleSubmit = () => {
   inputEl.value?.blur();
   if (!inputValue.value && mode.value === 'popular') return;
 
+  changePage(1);
   getMovieList(inputValue.value);
   inputValue.value = '';
 };

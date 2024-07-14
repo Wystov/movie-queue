@@ -39,7 +39,7 @@ const props = defineProps<{
 
 const router = useRouter();
 
-const rating = computed(() => props.movie.vote_average.toFixed(1).replace('.0', ''));
+const rating = computed(() => props.movie.vote_average?.toFixed(1).replace('.0', ''));
 
 const date = computed(() => getFormattedDate(props.movie.release_date));
 
