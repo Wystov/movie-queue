@@ -9,7 +9,7 @@
       <v-container class="fill-height d-flex" fluid>
         <v-row>
           <v-col cols="auto">
-            <v-img class="poster" width="400px" height="600px" :src="movie.poster_path" />
+            <movie-card-image class="poster" :path="movie.poster_path" />
           </v-col>
           <v-col>
             <p class="text-h2 mb-2">{{ movie.title }}</p>
@@ -38,6 +38,7 @@ import MovieInfoLine from '@/components/shared/MovieInfoLine.vue';
 import MovieCardActions from '@/components/MovieCard/MovieCardActions.vue';
 import { computed } from 'vue';
 import { getFormattedTime } from '@/utils/getFormattedTime';
+import MovieCardImage from '@/components/MovieCard/MovieCardImage.vue';
 
 const route = useRoute();
 const { getMovie } = useSearchStore();

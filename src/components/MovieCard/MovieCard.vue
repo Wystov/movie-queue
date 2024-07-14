@@ -9,6 +9,7 @@
       <movie-card-image
         :path="movie.poster_path"
         :is-hovering="isHovering"
+        in-card
         @click-details="handleClick" />
 
       <v-card-title style="white-space: normal; height: 4em;">

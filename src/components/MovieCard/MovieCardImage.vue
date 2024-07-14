@@ -1,7 +1,8 @@
 <template>
   <v-img
     :src="imgPath"
-    height="70%"
+    :height="inCard ? '70%' : '600px'"
+    :width="inCard ? '' : '400px'"
     cover
   >
     <template #placeholder>
@@ -15,14 +16,14 @@
     <template #error>
       <v-img
         :src="thumbnail"
-        height="80%"
-        aspect-ratio="3/4"
+        :height="inCard ? '70%' : '600px'"
+        :width="inCard ? '' : '400px'"
         cover
       />
     </template>
     <v-expand-transition>
       <div
-        v-if="isHovering"
+        v-if="inCard && isHovering"
         class="d-flex transition-fast-in-fast-out bg-grey-darken-4 v-card--reveal text-h2"
         style="height: 100%;"
       >
@@ -41,7 +42,8 @@ defineEmits(['click-details']);
 
 const props = defineProps<{
   path?: string | null;
-  isHovering: boolean | null;
+  isHovering?: boolean | null;
+  inCard?: boolean;
 }>();
 
 const imgPath = computed(
