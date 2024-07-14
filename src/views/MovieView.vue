@@ -1,76 +1,18 @@
 <template>
-  <div v-if="isLoading">Loading...</div>
+  <div v-if="search.isLoading">Loading...</div>
   <template v-else>
-    <v-card
-      color="surface-variant"
-      class="dark-bg fill-height"
-      :image="movie.backdrop_path ?? ''"
-    >
-      <v-container class="fill-height d-flex" fluid>
-        <v-row>
-          <v-col cols="auto">
-            <movie-poster class="poster" :path="movie.poster_path" />
-          </v-col>
-          <v-col>
-            <p class="text-h2 mb-2">{{ movie.title }}</p>
-            <v-card-subtitle class="text-h6 pa-0">{{ movie.tagline }}</v-card-subtitle>
-            <p class="mt-6 text-body-1">{{ movie.overview }}</p>
-            <div class="d-flex flex-column ga-2 my-4">
-              <movie-info-line
-                v-for="item in additionalInfo"
-                :key="item.icon"
-                :info="item.info"
-                :icon="item.icon" />
-            </div>
-            <movie-actions :movie="movie" />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
+    <movie-extended />
   </template>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { useSearchStore } from '@/stores/search';
-import { storeToRefs } from 'pinia';
-import MovieInfoLine from '@/components/shared/MovieInfoLine.vue';
-import MovieActions from '@/components/shared/MovieActions.vue';
-import { computed } from 'vue';
-import { getFormattedTime } from '@/utils/getFormattedTime';
-import MoviePoster from '@/components/shared/MoviePoster.vue';
+import MovieExtended from '@/components/MovieExtended.vue';
 
 const route = useRoute();
-const { getMovie } = useSearchStore();
-const { isLoading, movie } = storeToRefs(useSearchStore());
+const search = useSearchStore();
 
-getMovie(route.params.id as string);
+search.getMovie(route.params.id as string);
 
-const additionalInfo = computed(() => [
-  {
-    icon: 'mdi-calendar-month',
-    info: movie.value.release_date,
-  },
-  {
-    icon: 'mdi-star',
-    info: movie.value.vote_average?.toString(),
-  },
-  {
-    icon: 'mdi-clock-time-four-outline',
-    info: getFormattedTime(movie.value.runtime ?? 0),
-  },
-  {
-    icon: 'mdi-movie-filter',
-    info: movie.value.genres?.map((genre) => genre.name).join(', ') ?? '',
-  },
-]);
 </script>
-
-<style scoped>
-.dark-bg ::v-deep img {
-    filter: brightness(20%);
-}
-.poster ::v-deep img {
-  filter: none;
-}
-</style>
