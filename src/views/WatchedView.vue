@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import MovieList from '@/components/MovieList/MovieList.vue';
 import { useQueueStore } from '../stores/queue';
-import MovieList from '../components/MovieList.vue';
 
 const textContent = {
   title: 'Watched',

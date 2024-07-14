@@ -12,7 +12,7 @@
 import { useSearchStore } from '@/stores/search';
 import { storeToRefs } from 'pinia';
 import AppSpinner from '@/components/shared/AppSpinner.vue';
-import MovieList from '../components/MovieList.vue';
+import MovieList from '../components/MovieList/MovieList.vue';
 import SearchBar from '../components/SearchBar.vue';
 
 const { results, mode, isLoading } = storeToRefs(useSearchStore());
