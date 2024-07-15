@@ -4,10 +4,12 @@
     <VMain>
       <router-view />
     </VMain>
+    <scroll-to-top />
   </VApp>
 </template>
 
 <script setup lang="ts">
+import ScrollToTop from '@/components/ScrollToTop.vue';
 import AppSideBar from './components/SideBar.vue';
 import { useQueueStore } from './stores/queue';
 import { useSearchStore } from './stores/search';
