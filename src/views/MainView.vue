@@ -8,7 +8,8 @@
   />
   <movie-pagination
     :length="pagesTotal"
-    @update:model-value="handlePagination" />
+    :current-page="currentPage"
+    @update:current-page="handlePagination" />
 </template>
 
 <script setup lang="ts">
@@ -20,7 +21,7 @@ import MovieList from '../components/MovieList/MovieList.vue';
 import SearchBar from '../components/SearchBar.vue';
 
 const {
-  results, mode, isLoading, pagesTotal, requestString,
+  results, mode, isLoading, pagesTotal, requestString, currentPage,
 } = storeToRefs(useSearchStore());
 
 const { changePage, getMovieList } = useSearchStore();

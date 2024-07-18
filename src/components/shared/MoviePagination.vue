@@ -7,12 +7,21 @@
 </template>
 
 <script setup lang="ts">
-import { useSearchStore } from '@/stores/search';
-import { storeToRefs } from 'pinia';
+import { computed, defineProps } from 'vue';
 
-defineProps<{
+const props = defineProps<{
+  currentPage: number,
   length: number
 }>();
 
-const { currentPage } = storeToRefs(useSearchStore());
+const emit = defineEmits(['update:current-page']);
+
+const currentPage = computed({
+  get() {
+    return props.currentPage;
+  },
+  set(value: number) {
+    emit('update:current-page', value);
+  },
+});
 </script>

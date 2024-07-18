@@ -5,7 +5,8 @@
     :header="textContent.title" />
   <movie-pagination
     :length="Math.ceil(watched.length / 20)"
-    @update:model-value="handlePagination" />
+    :current-page="currentPage.watched"
+    @update:current-page="handlePagination" />
 </template>
 
 <script setup lang="ts">
@@ -21,7 +22,7 @@ const textContent = {
 };
 
 const { getDataForPage, changePage } = useQueueStore();
-const { watched } = storeToRefs(useQueueStore());
+const { watched, currentPage } = storeToRefs(useQueueStore());
 
 const pageMovies = ref(getDataForPage('watched'));
 
