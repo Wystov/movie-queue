@@ -52,7 +52,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `Movie Queue - ${to.meta.title} page`;
+  console.log(to);
+  document.title = `Movie Queue - ${to.meta.title ?? ''} page`;
   next();
 });
 
