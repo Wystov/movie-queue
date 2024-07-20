@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import App404View from '@/views/App404View.vue';
 import MainView from '../views/MainView.vue';
 import ToWatchView from '../views/ToWatchView.vue';
 import WatchedView from '../views/WatchedView.vue';
@@ -31,13 +32,13 @@ const routes = [
     path: '/movie/:id',
     component: MovieView,
   },
-  // {
-  //   path: '/:any(.*)',
-  //   component: AppE404,
-  //   meta: {
-  //     title: 'error 404',
-  //   },
-  // },
+  {
+    path: '/:any(.*)',
+    component: App404View,
+    meta: {
+      title: '404',
+    },
+  },
 ];
 
 const router = createRouter({
