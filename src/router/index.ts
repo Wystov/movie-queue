@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import App404View from '@/views/App404View.vue';
 import MainView from '../views/MainView.vue';
 import ToWatchView from '../views/ToWatchView.vue';
 import WatchedView from '../views/WatchedView.vue';
@@ -9,9 +10,6 @@ const routes = [
     name: 'main',
     path: '/',
     component: MainView,
-    meta: {
-      title: 'Search',
-    },
   },
   {
     name: 'to-watch',
@@ -33,17 +31,19 @@ const routes = [
     name: 'movie',
     path: '/movie/:id',
     component: MovieView,
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: App404View,
     meta: {
-      title: 'Movie',
+      title: '404',
     },
   },
-  // {
-  //   path: '/:any(.*)',
-  //   component: AppE404,
-  //   meta: {
-  //     title: 'error 404',
-  //   },
-  // },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '404',
+  },
 ];
 
 const router = createRouter({
@@ -51,8 +51,9 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = `Movie Queue - ${to.meta.title} page`;
+router.beforeEach((to, _, next) => {
+  const title = `Movie Queue${to.meta.title ? ` - ${to.meta.title}` : ''}`;
+  document.title = title;
   next();
 });
 

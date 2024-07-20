@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { formatMovieInfo } from '@/utils/formatMovieInfo';
+import router from '@/router';
 import axiosMovieApi from '../api/movie-db';
 import type { MainPageMode, Movie } from '../types';
 
@@ -67,6 +68,7 @@ export const useSearchStore = defineStore('search', () => {
     } catch {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch data');
+      router.push({ name: '404' });
     } finally {
       isLoading.value = false;
     }

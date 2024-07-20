@@ -1,4 +1,5 @@
-import { createApp } from 'vue';
+/* eslint-disable no-param-reassign */
+import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
 
 import 'vuetify/styles';
@@ -16,7 +17,12 @@ const vuetify = createVuetify({
 
 const app = createApp(App);
 
-app.use(createPinia());
+const pinia = createPinia();
+pinia.use(({ store }) => {
+  store.router = markRaw(router);
+});
+
+app.use(pinia);
 app.use(router);
 app.use(vuetify);
 
