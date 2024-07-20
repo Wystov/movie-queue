@@ -33,11 +33,16 @@ const routes = [
     component: MovieView,
   },
   {
-    path: '/:any(.*)',
+    name: '404',
+    path: '/404',
     component: App404View,
     meta: {
       title: '404',
     },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '404',
   },
 ];
 
