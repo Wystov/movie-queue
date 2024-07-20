@@ -9,9 +9,6 @@ const routes = [
     name: 'main',
     path: '/',
     component: MainView,
-    meta: {
-      title: 'Search',
-    },
   },
   {
     name: 'to-watch',
@@ -33,9 +30,6 @@ const routes = [
     name: 'movie',
     path: '/movie/:id',
     component: MovieView,
-    meta: {
-      title: 'Movie',
-    },
   },
   // {
   //   path: '/:any(.*)',
@@ -51,9 +45,9 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  console.log(to);
-  document.title = `Movie Queue - ${to.meta.title ?? ''} page`;
+router.beforeEach((to, _, next) => {
+  const title = `Movie Queue${to.meta.title ? ` - ${to.meta.title}` : ''}`;
+  document.title = title;
   next();
 });
 
